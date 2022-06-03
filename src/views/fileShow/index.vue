@@ -22,7 +22,7 @@
                 <el-input v-model="form.region"></el-input>
               </el-form-item>
               <div class="buttonGrunp">
-                <el-button type="primary" @click="onSubmit">保存</el-button>
+                <el-button type="primary" @click="onSubmit">保存1</el-button>
               </div>
             </el-form>
           </el-tab-pane>
@@ -54,7 +54,7 @@ export default {
   },
   data() {
     return {
-      pdfSrc: "/static/aaa.pdf",
+      pdfSrc: "http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf",
       numPages: "", //  pdf 文件总页数
       activeName: "first",
       form: {
@@ -71,7 +71,6 @@ export default {
       var loadingTask = pdf.createLoadingTask(url);
       loadingTask.promise
         .then((pdf) => {
-          debugger;
           this.pdfSrc = loadingTask;
           this.numPages = pdf.numPages;
         })
