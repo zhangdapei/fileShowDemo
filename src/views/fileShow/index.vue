@@ -93,7 +93,7 @@ export default {
         background: "rgba(0, 0, 0, 0.7)",
       });
       setTimeout(() => {
-        this.getNumPages("/static/bbb.pdf");
+        this.getNumPages("http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf");
         loading.close();
       }, 2000);
     },
