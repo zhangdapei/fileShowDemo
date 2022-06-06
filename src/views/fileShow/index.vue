@@ -36,7 +36,7 @@
                 <el-input v-model="form.region"></el-input>
               </el-form-item>
               <div class="buttonGrunp">
-                <el-button type="primary" @click="save">保存</el-button>
+                <el-button type="primary" @click="save">保存测试</el-button>
               </div>
             </el-form>
           </el-tab-pane>
