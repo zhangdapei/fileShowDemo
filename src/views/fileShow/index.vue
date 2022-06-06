@@ -3,13 +3,13 @@
     <el-row>
       <el-col :span="12">
         <div class="pdf">
-          <pdf
+          <!-- <pdf
             :src="pdfSrc"
             v-for="item in numPages"
             :key="item"
             :page="item"
-          ></pdf>
-          <!-- <iframe class="iframePDF" :src="iframePDFSrc" frameborder="0"></iframe> -->
+          ></pdf> -->
+          <iframe class="iframePDF" :src="iframePDFSrc" frameborder="0"></iframe>
         </div>
       </el-col>
       <el-col :span="12">
@@ -23,7 +23,7 @@
                 <el-input v-model="form.region"></el-input>
               </el-form-item>
               <div class="buttonGrunp">
-                <el-button type="primary" @click="save">保存1</el-button>
+                <el-button type="primary" @click="save">保存2</el-button>
               </div>
             </el-form>
           </el-tab-pane>
@@ -66,14 +66,13 @@ export default {
     };
   },
   mounted() {
-    this.getNumPages(this.pdfSrc);
+    // this.getNumPages(this.pdfSrc);
   },
   methods: {
     getNumPages(url) {
       debugger
-       var loadingTask = pdf.createLoadingTask(url, {withCredentials: false});
-
-      // var loadingTask = pdf.createLoadingTask(url);
+      //  var loadingTask = pdf.createLoadingTask(url, {withCredentials: false});
+      var loadingTask = pdf.createLoadingTask(url);
       loadingTask.promise
         .then((pdf) => {
           debugger;
@@ -98,9 +97,9 @@ export default {
         background: "rgba(0, 0, 0, 0.7)",
       });
       setTimeout(() => {
-        this.getNumPages("https://idps2-dmxxg2.test.datagrand.cn/%2Fupload%2Fextract%2F20220602%2Fd10cbbf6-e25d-11ec-b621-02420a016ea2_print.pdf");
+        // this.getNumPages("http://idps2-dmxxg2.test.datagrand.cn/%2Fupload%2Fextract%2F20220602%2Fd10cbbf6-e25d-11ec-b621-02420a016ea2_print.pdf");
         // this.getNumPages("https://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf");
-        // this.iframePDFSrc = "http://idps2-dmxxg2.test.datagrand.cn/%2Fupload%2Fextract%2F20220602%2Fd10cbbf6-e25d-11ec-b621-02420a016ea2_print.pdf#toolbar=0"
+        this.iframePDFSrc = "https://idps2-dmxxg2.test.datagrand.cn/%2Fupload%2Fextract%2F20220602%2Fd10cbbf6-e25d-11ec-b621-02420a016ea2_print.pdf#toolbar=0"
         loading.close();
       }, 2000);
     },
@@ -112,7 +111,7 @@ export default {
 .fileShow {
   .pdf {
     height: calc(100vh - 50px);
-    overflow: auto;
+    // overflow: auto;
     .iframePDF{
       width: 100%;
       height: 100%;
