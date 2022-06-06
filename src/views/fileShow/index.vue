@@ -36,7 +36,7 @@
                 <el-input v-model="form.region"></el-input>
               </el-form-item>
               <div class="buttonGrunp">
-                <el-button type="primary" @click="save">保存测试</el-button>
+                <el-button type="primary" @click="save">保存</el-button>
               </div>
             </el-form>
           </el-tab-pane>
@@ -55,7 +55,7 @@ export default {
   },
   data() {
     return {
-      pdfSrc: "http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf",
+      pdfSrc: "https://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf",
       numPages: "", //  pdf 文件总页数
       iframePDFSrc:"http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf",
       activeName: "first",
@@ -70,7 +70,10 @@ export default {
   },
   methods: {
     getNumPages(url) {
-      var loadingTask = pdf.createLoadingTask(url);
+      debugger
+       var loadingTask = pdf.createLoadingTask(url, {withCredentials: false});
+
+      // var loadingTask = pdf.createLoadingTask(url);
       loadingTask.promise
         .then((pdf) => {
           debugger;
@@ -95,8 +98,8 @@ export default {
         background: "rgba(0, 0, 0, 0.7)",
       });
       setTimeout(() => {
-        // this.getNumPages("http://idps2-dmxxg2.test.datagrand.cn/%2Fupload%2Fextract%2F20220602%2Fd10cbbf6-e25d-11ec-b621-02420a016ea2_print.pdf");
-        this.getNumPages("https://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf");
+        this.getNumPages("http://idps2-dmxxg2.test.datagrand.cn/%2Fupload%2Fextract%2F20220602%2Fd10cbbf6-e25d-11ec-b621-02420a016ea2_print.pdf");
+        // this.getNumPages("https://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf");
         // this.iframePDFSrc = "http://idps2-dmxxg2.test.datagrand.cn/%2Fupload%2Fextract%2F20220602%2Fd10cbbf6-e25d-11ec-b621-02420a016ea2_print.pdf#toolbar=0"
         loading.close();
       }, 2000);
