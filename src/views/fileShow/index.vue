@@ -3,13 +3,13 @@
     <el-row>
       <el-col :span="12">
         <div class="pdf">
-          <!-- <pdf
+          <pdf
             :src="pdfSrc"
             v-for="item in numPages"
             :key="item"
             :page="item"
-          ></pdf> -->
-          <iframe class="iframePDF" :src="iframePDFSrc" frameborder="0"></iframe>
+          ></pdf>
+          <!-- <iframe class="iframePDF" :src="iframePDFSrc" frameborder="0"></iframe> -->
         </div>
       </el-col>
       <el-col :span="12">
@@ -55,9 +55,9 @@ export default {
   },
   data() {
     return {
-      pdfSrc: "/static/aaa.pdf",
+      pdfSrc: "http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf",
       numPages: "", //  pdf 文件总页数
-      iframePDFSrc:"https://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf#toolbar=0",
+      iframePDFSrc:"http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf",
       activeName: "first",
       form: {
         name: "",
@@ -66,7 +66,7 @@ export default {
     };
   },
   mounted() {
-    // this.getNumPages(this.pdfSrc);
+    this.getNumPages(this.pdfSrc);
   },
   methods: {
     getNumPages(url) {
@@ -96,8 +96,8 @@ export default {
       });
       setTimeout(() => {
         // this.getNumPages("http://idps2-dmxxg2.test.datagrand.cn/%2Fupload%2Fextract%2F20220602%2Fd10cbbf6-e25d-11ec-b621-02420a016ea2_print.pdf");
-        // this.getNumPages("http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf");
-        this.iframePDFSrc = "https://idps2-dmxxg2.test.datagrand.cn/%2Fupload%2Fextract%2F20220602%2Fd10cbbf6-e25d-11ec-b621-02420a016ea2_print.pdf#toolbar=0"
+        this.getNumPages("https://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf");
+        // this.iframePDFSrc = "http://idps2-dmxxg2.test.datagrand.cn/%2Fupload%2Fextract%2F20220602%2Fd10cbbf6-e25d-11ec-b621-02420a016ea2_print.pdf#toolbar=0"
         loading.close();
       }, 2000);
     },
@@ -109,6 +109,7 @@ export default {
 .fileShow {
   .pdf {
     height: calc(100vh - 50px);
+    overflow: auto;
     .iframePDF{
       width: 100%;
       height: 100%;
