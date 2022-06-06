@@ -23,7 +23,7 @@
                 <el-input v-model="form.region"></el-input>
               </el-form-item>
               <div class="buttonGrunp">
-                <el-button type="primary" @click="save">保存2</el-button>
+                <el-button type="primary" @click="save">保存</el-button>
               </div>
             </el-form>
           </el-tab-pane>
@@ -57,7 +57,7 @@ export default {
     return {
       pdfSrc: "https://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf",
       numPages: "", //  pdf 文件总页数
-      iframePDFSrc:"http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf",
+      iframePDFSrc:"https://idps2-dmxxg2.test.datagrand.cn/%2Fupload%2Fextract%2F20220602%2Fd10cbbf6-e25d-11ec-b621-02420a016ea2_print.pdf#toolbar=0",
       activeName: "first",
       form: {
         name: "",
@@ -99,7 +99,7 @@ export default {
       setTimeout(() => {
         // this.getNumPages("http://idps2-dmxxg2.test.datagrand.cn/%2Fupload%2Fextract%2F20220602%2Fd10cbbf6-e25d-11ec-b621-02420a016ea2_print.pdf");
         // this.getNumPages("https://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf");
-        this.iframePDFSrc = "https://idps2-dmxxg2.test.datagrand.cn/%2Fupload%2Fextract%2F20220602%2Fd10cbbf6-e25d-11ec-b621-02420a016ea2_print.pdf#toolbar=0"
+        this.iframePDFSrc = "https://idps2-dmxxg2.test.datagrand.cn/%2Fupload%2Fextract%2F20220602%2Fd10cbbf6-e25d-11ec-b621-02420a016ea2_print.pdf"
         loading.close();
       }, 2000);
     },
