@@ -9,7 +9,8 @@
             :key="item"
             :page="item"
           ></pdf> -->
-          <iframe class="iframePDF" :src="iframePDFSrc" frameborder="0"></iframe>
+          <iframe ref="iframePDF" class="iframePDF" :src="iframePDFSrc" frameborder="0"></iframe>
+          <!-- <a :href="iframePDFSrc"></a> -->
         </div>
       </el-col>
       <el-col :span="12">
@@ -24,6 +25,7 @@
               </el-form-item>
               <div class="buttonGrunp">
                 <el-button type="primary" @click="save">保存</el-button>
+                <el-button type="primary" @click="setWord">Word</el-button>
               </div>
             </el-form>
           </el-tab-pane>
@@ -102,6 +104,9 @@ export default {
         this.iframePDFSrc = "./static/save.pdf#toolbar=0"
         loading.close();
       }, 2000);
+    },
+    setWord(){
+      this.iframePDFSrc = "'https://vIEw.officeapps.live.com/op/vIEw.aspx?src=https://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf'"
     },
   },
 };
