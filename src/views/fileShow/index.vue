@@ -21,14 +21,14 @@
         <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
           <el-tab-pane label="文档修正" name="first">
             <el-form ref="form" :model="form" label-width="120px" class="form">
-              <el-form-item label="关键字：">
-                <el-input v-model="form.name"></el-input>
+              <!-- <el-form-item label="关键字：">
+                <el-input v-model="form.name1"></el-input>
               </el-form-item>
               <el-form-item label="修正：">
-                <el-input v-model="form.region"></el-input>
-              </el-form-item>
+                <el-input v-model="form.region1"></el-input>
+              </el-form-item> -->
               <div class="buttonGrunp">
-                <el-button type="primary" @click="save">保存</el-button>
+                <el-button type="primary" @click="correct">修正</el-button>
               </div>
             </el-form>
           </el-tab-pane>
@@ -65,6 +65,7 @@ export default {
       numPages: "", //  pdf 文件总页数
       iframePDFSrc:"./static/demo1.pdf#toolbar=0",
       activeName: "second",
+      demoFlag:1,
       form: {
         name: "",
         region: "",
@@ -95,6 +96,16 @@ export default {
     onSubmit() {
       console.log("submit!");
     },
+    correct(){
+      const elink = document.createElement("a");
+      elink.download = this.demoFlag==1?"demo1.doc":"demo2.doc";
+      elink.style.display = "none";
+      elink.href = this.demoFlag==1?'./static/demo1.doc':'./static/demo2.doc'+'?response-content-type=application/octet-stream';
+      document.body.appendChild(elink);
+      elink.click();
+      URL.revokeObjectURL(elink.href); // 释放URL 对象
+      document.body.removeChild(elink);
+    },
     save(){
       setTimeout(() => {
         this.$message.success("规则添加成功")
@@ -112,6 +123,7 @@ export default {
         // this.getNumPages("http://idps2-dmxxg2.test.datagrand.cn/%2Fupload%2Fextract%2F20220602%2Fd10cbbf6-e25d-11ec-b621-02420a016ea2_print.pdf");
         // this.getNumPages("https://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf");
         this.iframePDFSrc = "./static/demo2.pdf#toolbar=0"
+        this.demoFlag = 2
         loading.close();
       }, 2000);
     },
