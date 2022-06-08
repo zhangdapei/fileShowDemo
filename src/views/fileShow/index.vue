@@ -9,7 +9,11 @@
             :key="item"
             :page="item"
           ></pdf> -->
-          <iframe ref="iframePDF" class="iframePDF" :src="iframePDFSrc" frameborder="0"></iframe>
+          <iframe ref="iframePDF" class="iframePDF" :src="iframePDFSrc" frameborder="0"  scrolling="no">
+            <head>
+              <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+            </head>
+          </iframe>
           <!-- <a :href="iframePDFSrc"></a> -->
         </div>
       </el-col>
@@ -25,7 +29,6 @@
               </el-form-item>
               <div class="buttonGrunp">
                 <el-button type="primary" @click="save">保存</el-button>
-                <el-button type="primary" @click="setWord">Word</el-button>
               </div>
             </el-form>
           </el-tab-pane>
@@ -39,6 +42,7 @@
               </el-form-item>
               <div class="buttonGrunp">
                 <el-button type="primary" @click="save">保存</el-button>
+                <el-button type="primary" @click="load">加载文档</el-button>
               </div>
             </el-form>
           </el-tab-pane>
@@ -59,8 +63,8 @@ export default {
     return {
       pdfSrc: "https://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf",
       numPages: "", //  pdf 文件总页数
-      iframePDFSrc:"./static/demo.pdf#toolbar=0",
-      activeName: "first",
+      iframePDFSrc:"./static/demo1.pdf#toolbar=0",
+      activeName: "second",
       form: {
         name: "",
         region: "",
@@ -91,7 +95,13 @@ export default {
     onSubmit() {
       console.log("submit!");
     },
-    save() {
+    save(){
+      setTimeout(() => {
+        this.$message.success("规则添加成功")
+        this.form = {}
+      }, 1000);
+    },
+    load() {
       const loading = this.$loading({
         lock: true,
         text: "Loading",
@@ -101,7 +111,7 @@ export default {
       setTimeout(() => {
         // this.getNumPages("http://idps2-dmxxg2.test.datagrand.cn/%2Fupload%2Fextract%2F20220602%2Fd10cbbf6-e25d-11ec-b621-02420a016ea2_print.pdf");
         // this.getNumPages("https://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf");
-        this.iframePDFSrc = "./static/save.pdf#toolbar=0"
+        this.iframePDFSrc = "./static/demo2.pdf#toolbar=0"
         loading.close();
       }, 2000);
     },
