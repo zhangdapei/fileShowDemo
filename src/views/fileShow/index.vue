@@ -1,7 +1,7 @@
 <template>
   <div class="fileShow">
     <el-row>
-      <el-col :span="12">
+      <el-col :span="0">
         <div class="pdf">
           <!-- <pdf
             :src="pdfSrc"
@@ -9,40 +9,38 @@
             :key="item"
             :page="item"
           ></pdf> -->
-          <iframe ref="iframePDF" class="iframePDF" :src="iframePDFSrc" frameborder="0"  scrolling="no">
+          <!-- <iframe ref="iframePDF" class="iframePDF" :src="iframePDFSrc" frameborder="0"  scrolling="no">
             <head>
               <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
             </head>
-          </iframe>
+          </iframe> -->
           <!-- <a :href="iframePDFSrc"></a> -->
         </div>
       </el-col>
       <el-col :span="12">
         <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-          <el-tab-pane label="文档修正" name="first">
-            <el-form ref="form" :model="form" label-width="120px" class="form">
-              <!-- <el-form-item label="关键字：">
-                <el-input v-model="form.name1"></el-input>
-              </el-form-item>
-              <el-form-item label="修正：">
-                <el-input v-model="form.region1"></el-input>
-              </el-form-item> -->
-              <div class="buttonGrunp">
-                <el-button type="primary" @click="correct">修正</el-button>
-              </div>
-            </el-form>
+          <el-tab-pane label="文档审核" name="first">
+            <el-table :data="tableData" style="width: 100%">
+              <el-table-column prop="date" label="规则">
+              </el-table-column>
+              <el-table-column prop="name" label="实体">
+              </el-table-column>
+              <el-table-column prop="address" label="业务逻辑" width="400">
+              </el-table-column>
+            </el-table>
           </el-tab-pane>
           <el-tab-pane label="新增规则" name="second">
             <el-form ref="form" :model="form" label-width="120px" class="form">
-              <el-form-item label="关键字：">
+              <el-form-item label="规则：">
                 <el-input v-model="form.name"></el-input>
               </el-form-item>
-              <el-form-item label="业务规则模板：">
+              <el-form-item label="逻辑：">
                 <el-input v-model="form.region"></el-input>
               </el-form-item>
               <div class="buttonGrunp">
                 <el-button type="primary" @click="save">保存</el-button>
-                <el-button type="primary" @click="load">加载文档</el-button>
+                <el-button>取消</el-button>
+                <!-- <el-button type="primary" @click="load">加载文档</el-button> -->
               </div>
             </el-form>
           </el-tab-pane>
@@ -61,11 +59,12 @@ export default {
   },
   data() {
     return {
-      pdfSrc: "https://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf",
+      tableData:[{date:"2012"}],
+      pdfSrc: "./static/demo1.pdf",
       numPages: "", //  pdf 文件总页数
-      iframePDFSrc:"./static/demo1.pdf#toolbar=0",
-      activeName: "second",
-      demoFlag:1,
+      iframePDFSrc: "./static/demo1.pdf#toolbar=0",
+      activeName: "first",
+      demoFlag: 1,
       form: {
         name: "",
         region: "",
@@ -73,16 +72,14 @@ export default {
     };
   },
   mounted() {
-    // this.getNumPages(this.pdfSrc);
+    this.getNumPages(this.pdfSrc);
   },
   methods: {
     getNumPages(url) {
-      debugger
       //  var loadingTask = pdf.createLoadingTask(url, {withCredentials: false});
       var loadingTask = pdf.createLoadingTask(url);
       loadingTask.promise
         .then((pdf) => {
-          debugger;
           this.pdfSrc = loadingTask;
           this.numPages = pdf.numPages;
         })
@@ -96,17 +93,17 @@ export default {
     onSubmit() {
       console.log("submit!");
     },
-    correct(){
+    correct() {
       const elink = document.createElement("a");
-      elink.download = this.demoFlag==1?"demo1.doc":"demo2.doc";
+      elink.download = this.demoFlag == 1 ? "demo1.doc" : "demo2.doc";
       elink.style.display = "none";
-      elink.href = this.demoFlag==1?'./static/demo1.doc':'./static/demo2.doc'+'?response-content-type=application/octet-stream';
+      elink.href = this.demoFlag == 1 ? './static/demo1.doc' : './static/demo2.doc' + '?response-content-type=application/octet-stream';
       document.body.appendChild(elink);
       elink.click();
       URL.revokeObjectURL(elink.href); // 释放URL 对象
       document.body.removeChild(elink);
     },
-    save(){
+    save() {
       setTimeout(() => {
         this.$message.success("规则添加成功")
         this.form = {}
@@ -127,7 +124,7 @@ export default {
         loading.close();
       }, 2000);
     },
-    setWord(){
+    setWord() {
       this.iframePDFSrc = "'https://vIEw.officeapps.live.com/op/vIEw.aspx?src=https://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf'"
     },
   },
@@ -138,16 +135,19 @@ export default {
 .fileShow {
   .pdf {
     height: calc(100vh - 50px);
+
     // overflow: auto;
-    .iframePDF{
+    .iframePDF {
       width: 100%;
       height: 100%;
     }
   }
+
   .form {
     padding-top: 50px;
     width: 80%;
     margin: 0 auto;
+
     .buttonGrunp {
       text-align: center;
     }
