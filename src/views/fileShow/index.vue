@@ -46,12 +46,14 @@
           </el-tab-pane>
         </el-tabs>
       </el-col>
-    </el-row>
+    </el-row> 
   </div>
 </template>
 
 <script>
 import pdf from "vue-pdf";
+import { getKeyEntries } from '@/api/fileShow'
+
 export default {
   name: "fileShow",
   components: {
@@ -72,61 +74,68 @@ export default {
     };
   },
   mounted() {
-    this.getNumPages(this.pdfSrc);
+    // this.getNumPages(this.pdfSrc);
   },
   methods: {
-    getNumPages(url) {
-      //  var loadingTask = pdf.createLoadingTask(url, {withCredentials: false});
-      var loadingTask = pdf.createLoadingTask(url);
-      loadingTask.promise
-        .then((pdf) => {
-          this.pdfSrc = loadingTask;
-          this.numPages = pdf.numPages;
-        })
-        .catch((err) => {
-          console.error("pdf加载失败");
-        });
+    save(){
+      getKeyEntries().then(res => {
+        console.log(res)
+      })
     },
+
     handleClick(tab, event) {
       console.log(tab, event);
     },
     onSubmit() {
       console.log("submit!");
     },
-    correct() {
-      const elink = document.createElement("a");
-      elink.download = this.demoFlag == 1 ? "demo1.doc" : "demo2.doc";
-      elink.style.display = "none";
-      elink.href = this.demoFlag == 1 ? './static/demo1.doc' : './static/demo2.doc' + '?response-content-type=application/octet-stream';
-      document.body.appendChild(elink);
-      elink.click();
-      URL.revokeObjectURL(elink.href); // 释放URL 对象
-      document.body.removeChild(elink);
-    },
-    save() {
-      setTimeout(() => {
-        this.$message.success("规则添加成功")
-        this.form = {}
-      }, 1000);
-    },
-    load() {
-      const loading = this.$loading({
-        lock: true,
-        text: "Loading",
-        spinner: "el-icon-loading",
-        background: "rgba(0, 0, 0, 0.7)",
-      });
-      setTimeout(() => {
-        // this.getNumPages("http://idps2-dmxxg2.test.datagrand.cn/%2Fupload%2Fextract%2F20220602%2Fd10cbbf6-e25d-11ec-b621-02420a016ea2_print.pdf");
-        // this.getNumPages("https://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf");
-        this.iframePDFSrc = "./static/demo2.pdf#toolbar=0"
-        this.demoFlag = 2
-        loading.close();
-      }, 2000);
-    },
-    setWord() {
-      this.iframePDFSrc = "'https://vIEw.officeapps.live.com/op/vIEw.aspx?src=https://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf'"
-    },
+
+    // getNumPages(url) {
+    //   //  var loadingTask = pdf.createLoadingTask(url, {withCredentials: false});
+    //   var loadingTask = pdf.createLoadingTask(url);
+    //   loadingTask.promise
+    //     .then((pdf) => {
+    //       this.pdfSrc = loadingTask;
+    //       this.numPages = pdf.numPages;
+    //     })
+    //     .catch((err) => {
+    //       console.error("pdf加载失败");
+    //     });
+    // },
+    // correct() {
+    //   const elink = document.createElement("a");
+    //   elink.download = this.demoFlag == 1 ? "demo1.doc" : "demo2.doc";
+    //   elink.style.display = "none";
+    //   elink.href = this.demoFlag == 1 ? './static/demo1.doc' : './static/demo2.doc' + '?response-content-type=application/octet-stream';
+    //   document.body.appendChild(elink);
+    //   elink.click();
+    //   URL.revokeObjectURL(elink.href); // 释放URL 对象
+    //   document.body.removeChild(elink);
+    // },
+    // save() {
+    //   setTimeout(() => {
+    //     this.$message.success("规则添加成功")
+    //     this.form = {}
+    //   }, 1000);
+    // },
+    // load() {
+    //   const loading = this.$loading({
+    //     lock: true,
+    //     text: "Loading",
+    //     spinner: "el-icon-loading",
+    //     background: "rgba(0, 0, 0, 0.7)",
+    //   });
+    //   setTimeout(() => {
+    //     // this.getNumPages("http://idps2-dmxxg2.test.datagrand.cn/%2Fupload%2Fextract%2F20220602%2Fd10cbbf6-e25d-11ec-b621-02420a016ea2_print.pdf");
+    //     // this.getNumPages("https://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf");
+    //     this.iframePDFSrc = "./static/demo2.pdf#toolbar=0"
+    //     this.demoFlag = 2
+    //     loading.close();
+    //   }, 2000);
+    // },
+    // setWord() {
+    //   this.iframePDFSrc = "'https://vIEw.officeapps.live.com/op/vIEw.aspx?src=https://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf'"
+    // },
   },
 };
 </script>
