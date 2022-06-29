@@ -90,7 +90,7 @@ export default {
       })
     },
     handleClick(tab, event) {
-      console.log(tab, event);
+      // console.log(tab, event);
     },
     onSubmit() {
       console.log("submit!");
