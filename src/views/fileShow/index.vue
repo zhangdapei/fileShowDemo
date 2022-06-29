@@ -68,7 +68,7 @@
 
 <script>
 import pdf from "vue-pdf";
-import { getKeyEntries, setKeyEntries } from "@/api/fileShow";
+import { getKeyEntries, setKeyEntries,getKeyEntriesList } from "@/api/fileShow";
 
 export default {
   name: "fileShow",
@@ -93,19 +93,23 @@ export default {
   mounted() {
     // this.getNumPages(this.pdfSrc);
     this.getData();
-    this.save()
+    this.getlist()
   },
   methods: {
+    getlist(){
+      getKeyEntriesList().then((res) => {
+        this.tableData = res
+      });
+    },
     save() {
       // _getVersion('https://qualtrics-sv.cs111.force.com/services/apexrest/doc/keyentries')().then(res => {
       //   console.log(res)
       // })
-      let data = this.form.rules?this.form:{}
-      setKeyEntries(data).then((res) => {
+      setKeyEntries(this.form).then((res) => {
         console.log(res)
         this.form = {}
         this.$message.success("规则保存成功")
-        this.tableData = res
+        this.getlist()
       });
     },
     getData() {

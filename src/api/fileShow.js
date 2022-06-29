@@ -15,3 +15,9 @@ export function setKeyEntries(data) {
         data
     })
 }
+export function getKeyEntriesList() {
+    return request({
+        url: base_ming_url+'/services/apexrest/doc/keyentries',
+        method: 'post',
+    })
+}
