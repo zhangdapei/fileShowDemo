@@ -20,12 +20,12 @@
       <el-col :span="24">
         <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
           <el-tab-pane label="文档审核" name="first">
-            <el-table :data="tableData" style="width: 100%" v-if="keyEntries.values">
+            <el-table :data="tableDatashenhe" style="width: 100%" v-if="keyEntries.values">
               <el-table-column prop="rules" label="规则" align="center">
               </el-table-column>
               <el-table-column  label="实体" align="center">
                 <template slot-scope="scope">
-                  {{keyEntries.values[0].entries[scope.row.rules] }}
+                  {{keyEntries.values[1].entries[scope.row.rules] }}
                 </template>
               </el-table-column>
               <el-table-column
@@ -112,6 +112,7 @@ export default {
     getlist(){
       getKeyEntriesList().then((res) => {
         this.tableData = res
+        this.tableDatashenhe = res.filter(item =>["租赁年限","电话号码","出租人"].indexOf(item.rules)>-1)
       });
     },
     save() {
