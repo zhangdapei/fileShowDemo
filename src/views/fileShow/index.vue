@@ -93,14 +93,19 @@ export default {
   mounted() {
     // this.getNumPages(this.pdfSrc);
     this.getData();
+    this.save()
   },
   methods: {
     save() {
       // _getVersion('https://qualtrics-sv.cs111.force.com/services/apexrest/doc/keyentries')().then(res => {
       //   console.log(res)
       // })
-      setKeyEntries(this.form).then((res) => {
-        console.log(JSON.parse(res));
+      let data = this.form.rules?this.form:{}
+      setKeyEntries(data).then((res) => {
+        console.log(res)
+        this.form = {}
+        this.$message.success("规则保存成功")
+        this.tableData = res
       });
     },
     getData() {
@@ -108,16 +113,16 @@ export default {
         this.keyEntries = JSON.parse(res).result
         console.log(this.keyEntries);
       });
-      this.tableData = [
-        {
-          rules: "租赁年限", //规则
-          logic: "租赁年限大于五年", //逻辑
-        },
-        {
-          rules: "1", //规则
-          logic: "3", //逻辑
-        },
-      ];
+      // this.tableData = [
+      //   {
+      //     rules: "租赁年限", //规则
+      //     logic: "租赁年限大于五年", //逻辑
+      //   },
+      //   {
+      //     rules: "1", //规则
+      //     logic: "3", //逻辑
+      //   },
+      // ];
     },
     handleClick(tab, event) {
       // console.log(tab, event);
