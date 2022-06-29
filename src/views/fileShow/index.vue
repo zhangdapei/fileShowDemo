@@ -30,7 +30,7 @@
               </el-table-column>
               <el-table-column
                 prop="logic"
-                label="业务逻辑"
+                label="审核结果"
                 align="center"
                 width="400"
               >
@@ -59,6 +59,19 @@
                 <!-- <el-button type="primary" @click="load">加载文档</el-button> -->
               </div>
             </el-form>
+          </el-tab-pane>
+          <el-tab-pane label="规则列表" name="third">
+            <el-table :data="tableData" style="width: 100%" v-if="keyEntries.values">
+              <el-table-column prop="rules" label="规则" align="center">
+              </el-table-column>
+              <el-table-column
+                prop="logic"
+                label="规则内容"
+                align="center"
+                width="400"
+              >
+              </el-table-column>
+            </el-table>
           </el-tab-pane>
         </el-tabs>
       </el-col>
