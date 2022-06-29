@@ -20,17 +20,35 @@
       <el-col :span="24">
         <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
           <el-tab-pane label="文档审核" name="first">
-            <el-table :data="tableData" style="width: 100%">
-              <el-table-column prop="date" label="规则" align="center"> </el-table-column>
-              <el-table-column prop="name" label="实体" align="center"> </el-table-column>
-              <el-table-column prop="address" label="业务逻辑" align="center" width="400">
+            <el-table :data="tableData" style="width: 100%" v-if="keyEntries.values">
+              <el-table-column prop="rules" label="规则" align="center">
+              </el-table-column>
+              <el-table-column  label="实体" align="center">
+                <template slot-scope="scope">
+                  {{keyEntries.values[0].entries[scope.row.rules] }}
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="logic"
+                label="业务逻辑"
+                align="center"
+                width="400"
+              >
               </el-table-column>
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="新增规则" name="second">
             <el-form ref="form" :model="form" label-width="120px" class="form">
               <el-form-item label="规则：">
-                <el-input v-model="form.rules"></el-input>
+                <!-- <el-input v-model="form.rules"></el-input> -->
+                <el-select v-model="form.rules" placeholder="请选择" style="width:100%">
+                  <el-option
+                    v-for="item in keyEntries.entities"
+                    :key="item"
+                    :label="item"
+                    :value="item">
+                  </el-option>
+                </el-select>
               </el-form-item>
               <el-form-item label="逻辑：">
                 <el-input v-model="form.logic"></el-input>
@@ -50,7 +68,7 @@
 
 <script>
 import pdf from "vue-pdf";
-import { getKeyEntries,setKeyEntries} from "@/api/fileShow";
+import { getKeyEntries, setKeyEntries } from "@/api/fileShow";
 
 export default {
   name: "fileShow",
@@ -59,12 +77,13 @@ export default {
   },
   data() {
     return {
-      tableData: [{ date: "2012" }],
+      tableData: [],
       pdfSrc: "./static/demo1.pdf",
       numPages: "", //  pdf 文件总页数
       iframePDFSrc: "./static/demo1.pdf#toolbar=0",
       activeName: "first",
       demoFlag: 1,
+      keyEntries:{},
       form: {
         rules: "",
         logic: "",
@@ -73,21 +92,32 @@ export default {
   },
   mounted() {
     // this.getNumPages(this.pdfSrc);
-    this.getData()
+    this.getData();
   },
   methods: {
     save() {
       // _getVersion('https://qualtrics-sv.cs111.force.com/services/apexrest/doc/keyentries')().then(res => {
       //   console.log(res)
       // })
-      setKeyEntries(this.form).then(res => {
-        console.log(JSON.parse(res))
-      })
+      setKeyEntries(this.form).then((res) => {
+        console.log(JSON.parse(res));
+      });
     },
-    getData(){
-      getKeyEntries().then(res => {
-        console.log(JSON.parse(res))
-      })
+    getData() {
+      getKeyEntries().then((res) => {
+        this.keyEntries = JSON.parse(res).result
+        console.log(this.keyEntries);
+      });
+      this.tableData = [
+        {
+          rules: "租赁年限", //规则
+          logic: "租赁年限大于五年", //逻辑
+        },
+        {
+          rules: "1", //规则
+          logic: "3", //逻辑
+        },
+      ];
     },
     handleClick(tab, event) {
       // console.log(tab, event);
