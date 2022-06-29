@@ -21,10 +21,8 @@
         <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
           <el-tab-pane label="文档审核" name="first">
             <el-table :data="tableData" style="width: 100%">
-              <el-table-column prop="date" label="规则">
-              </el-table-column>
-              <el-table-column prop="name" label="实体">
-              </el-table-column>
+              <el-table-column prop="date" label="规则"> </el-table-column>
+              <el-table-column prop="name" label="实体"> </el-table-column>
               <el-table-column prop="address" label="业务逻辑" width="400">
               </el-table-column>
             </el-table>
@@ -46,13 +44,13 @@
           </el-tab-pane>
         </el-tabs>
       </el-col>
-    </el-row> 
+    </el-row>
   </div>
 </template>
 
 <script>
 import pdf from "vue-pdf";
-import { getKeyEntries } from '@/api/fileShow'
+import { getKeyEntries } from "@/api/fileShow";
 
 export default {
   name: "fileShow",
@@ -61,7 +59,7 @@ export default {
   },
   data() {
     return {
-      tableData:[{date:"2012"}],
+      tableData: [{ date: "2012" }],
       pdfSrc: "./static/demo1.pdf",
       numPages: "", //  pdf 文件总页数
       iframePDFSrc: "./static/demo1.pdf#toolbar=0",
@@ -77,7 +75,10 @@ export default {
     // this.getNumPages(this.pdfSrc);
   },
   methods: {
-    save(){
+    save() {
+      // _getVersion('https://qualtrics-sv.cs111.force.com/services/apexrest/doc/keyentries')().then(res => {
+      //   console.log(res)
+      // })
       getKeyEntries().then(res => {
         console.log(res)
       })

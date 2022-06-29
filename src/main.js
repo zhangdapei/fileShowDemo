@@ -12,8 +12,12 @@ import App from './App'
 import store from './store'
 import router from './router'
 
+import x2js from 'x2js'
+
 import '@/icons' // icon
 import '@/permission' // permission control
+
+Vue.prototype.$x2js = new x2js()
 
 /**
  * If you don't want to use mock-server
