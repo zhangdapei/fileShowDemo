@@ -36,6 +36,13 @@ module.exports = {
       warnings: false,
       errors: true
     },
+    proxy: {
+      '^/services': {
+        target: 'https://qualtrics-sv.cs111.force.com',
+        ws: true,
+        changeOrigin: true
+      },
+    },
     before: require('./mock/mock-server.js')
   },
   configureWebpack: {

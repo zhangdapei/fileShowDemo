@@ -17,23 +17,23 @@
           <!-- <a :href="iframePDFSrc"></a> -->
         </div>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="24">
         <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
           <el-tab-pane label="文档审核" name="first">
             <el-table :data="tableData" style="width: 100%">
-              <el-table-column prop="date" label="规则"> </el-table-column>
-              <el-table-column prop="name" label="实体"> </el-table-column>
-              <el-table-column prop="address" label="业务逻辑" width="400">
+              <el-table-column prop="date" label="规则" align="center"> </el-table-column>
+              <el-table-column prop="name" label="实体" align="center"> </el-table-column>
+              <el-table-column prop="address" label="业务逻辑" align="center" width="400">
               </el-table-column>
             </el-table>
           </el-tab-pane>
           <el-tab-pane label="新增规则" name="second">
             <el-form ref="form" :model="form" label-width="120px" class="form">
               <el-form-item label="规则：">
-                <el-input v-model="form.name"></el-input>
+                <el-input v-model="form.rules"></el-input>
               </el-form-item>
               <el-form-item label="逻辑：">
-                <el-input v-model="form.region"></el-input>
+                <el-input v-model="form.logic"></el-input>
               </el-form-item>
               <div class="buttonGrunp">
                 <el-button type="primary" @click="save">保存</el-button>
@@ -50,7 +50,7 @@
 
 <script>
 import pdf from "vue-pdf";
-import { getKeyEntries } from "@/api/fileShow";
+import { getKeyEntries,setKeyEntries} from "@/api/fileShow";
 
 export default {
   name: "fileShow",
@@ -66,24 +66,29 @@ export default {
       activeName: "first",
       demoFlag: 1,
       form: {
-        name: "",
-        region: "",
+        rules: "",
+        logic: "",
       },
     };
   },
   mounted() {
     // this.getNumPages(this.pdfSrc);
+    this.getData()
   },
   methods: {
     save() {
       // _getVersion('https://qualtrics-sv.cs111.force.com/services/apexrest/doc/keyentries')().then(res => {
       //   console.log(res)
       // })
-      getKeyEntries().then(res => {
-        console.log(res)
+      setKeyEntries(this.form).then(res => {
+        console.log(JSON.parse(res))
       })
     },
-
+    getData(){
+      getKeyEntries().then(res => {
+        console.log(JSON.parse(res))
+      })
+    },
     handleClick(tab, event) {
       console.log(tab, event);
     },
@@ -154,10 +159,9 @@ export default {
   }
 
   .form {
-    padding-top: 50px;
-    width: 80%;
+    padding-top: 40px;
+    width: 50%;
     margin: 0 auto;
-
     .buttonGrunp {
       text-align: center;
     }
