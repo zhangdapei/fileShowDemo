@@ -29,11 +29,15 @@
                 </template>
               </el-table-column>
               <el-table-column
-                prop="logic"
                 label="审核结果"
                 align="center"
                 width="400"
               >
+              <template slot-scope="scope">
+                 <el-tooltip class="item" effect="dark" :content="scope.row.rules+scope.row.logic" placement="top">
+                    <i class="el-icon-warning" style="color: red"></i>
+                </el-tooltip>
+              </template>
               </el-table-column>
             </el-table>
           </el-tab-pane>
@@ -68,7 +72,6 @@
                 prop="logic"
                 label="规则内容"
                 align="center"
-                width="400"
               >
               </el-table-column>
             </el-table>
@@ -91,12 +94,14 @@ export default {
   data() {
     return {
       tableData: [],
+      tableDatashenhe:[],
       pdfSrc: "./static/demo1.pdf",
       numPages: "", //  pdf 文件总页数
       iframePDFSrc: "./static/demo1.pdf#toolbar=0",
       activeName: "first",
       demoFlag: 1,
-      keyEntries:{},
+      keyEntries:{
+      },
       form: {
         rules: "",
         logic: "",
