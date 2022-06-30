@@ -133,7 +133,7 @@ export default {
     },
     getData() {
       getKeyEntries().then((res) => {
-        this.keyEntries = JSON.parse(res).result
+        this.keyEntries = res.result
         console.log(this.keyEntries);
       });
       // this.tableData = [
