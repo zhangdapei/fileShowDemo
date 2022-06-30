@@ -25,7 +25,7 @@
               </el-table-column>
               <el-table-column  label="实体" align="center">
                 <template slot-scope="scope">
-                  {{keyEntries.values[1].entries[scope.row.rules] }}
+                  {{keyEntries.values[0].entries[scope.row.rules] }}
                 </template>
               </el-table-column>
               <el-table-column
